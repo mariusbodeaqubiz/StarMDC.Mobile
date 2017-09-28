@@ -19,10 +19,17 @@ namespace XamarinTests.StepsDefinitions
             ScenarioContext.Current.Pending();
         }
         
-        [When(@"I submit ""(.*)"" as phone number")]
+        [Given(@"I submit ""(.*)"" as phone number")]
         public void WhenISubmitAsPhoneNumber(string phoneNumber)
         {
-            BaseClass.app.EnterText(c => c.Class("EntryEditText"), phoneNumber);
+            //appTest.Repl();
+            //BaseClass.app.ClearText(c => c.Class("EntryEditText"));
+            //BaseClass.app.EnterText(c => c.Class("EntryEditText"), phoneNumber);
+
+            BaseClass.app.WaitForElement(c => c.Class("EntryEditText"), "Upload is taking too long", new TimeSpan(0, 0, 90, 0));
+
+            Func<AppQuery, AppQuery> phoneNumberField = e => e.Class("EntryEditText").Index(0);
+            BaseClass.app.EnterText(phoneNumberField, phoneNumber);
         }
         
         [Given(@"I tap ""(.*)"" button")]
@@ -37,7 +44,7 @@ namespace XamarinTests.StepsDefinitions
                     BaseClass.app.Tap(c => c.Marked("Activate"));
                     break;
                 case "hamburger menu":
-                    BaseClass.app.WaitForElement(c => c.Class("AppCompatTextView").Marked("ODP TD(Acc)"), "Upload is taking too long", new TimeSpan(0, 0, 90, 0));
+                    BaseClass.app.WaitForElement(c => c.Class("AppCompatTextView").Marked("Star-MDC TD (Acc)"), "Upload is taking too long", new TimeSpan(0, 0, 90, 0));
                     BaseClass.app.Tap(c => c.Marked("OK"));
                     break;
                 case "thrombosys module":
@@ -74,6 +81,10 @@ namespace XamarinTests.StepsDefinitions
                 case "submit":
                     Func<AppQuery, AppQuery> submitButton = e => e.Marked("Submit");
                     BaseClass.app.Tap(submitButton);
+                    break;
+                case "never":
+                    Func<AppQuery, AppQuery> neverButton = e => e.Marked("Never");
+                    BaseClass.app.Tap(neverButton);
                     break;
                 default:
                     throw new PendingStepException();

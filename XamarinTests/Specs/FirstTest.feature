@@ -1,6 +1,7 @@
 ﻿Feature: TD app
 
 Scenario: Make a measurement and send it successfully
+	Given I submit "0623431288" as phone number
 	Given I tap "Sign Up" button
 	Then I should be on "enter PIN code" page
 	Given I tap "Activate" button
@@ -20,6 +21,7 @@ Scenario: Make a measurement and send it successfully
 	And I select "Medical Intervention" as "No"
 	Given I tap "Ready" button
 	Given I tap "Confirm and Send" button
+	And I tap "Never" button
 	Then I verify if the "BSN" is "611669857"
 	And I verify if the "Employee Id" is "2" 
 	And I verify if the "INR value" is "4" 
